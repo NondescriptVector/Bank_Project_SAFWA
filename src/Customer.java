@@ -1,4 +1,3 @@
-public class Customer {
-    public Customer() {
-    }
+public class Customer extends Person{
+
 }
