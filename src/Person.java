@@ -1,6 +1,6 @@
 public class Person {
     String name,address,username,password;
-    int id;
+    static String id;
 
     public Person(String name, String address, String username, String password, int id) {
         this.name = name;
