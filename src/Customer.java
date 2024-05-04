@@ -7,8 +7,9 @@ public class Customer extends Person {
     private double balance;
 
     // Constructor
-    public Customer(String customerId, String name, String address, String phoneNumber, double balance) {
-        this.customerId = customerId;
+    public Customer(String customerId, String address, String phoneNumber, double balance) {
+        super(customerId, address, address, phoneNumber,id);
+        this.customerId = id;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
