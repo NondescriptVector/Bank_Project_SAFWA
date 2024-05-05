@@ -50,12 +50,9 @@ public class Manager {
         }else System.out.println("Please enter a valid id ");
     }
     public void getEmployeeRecords(Employee employee){
-        int count=0;
-        for (Customer assignedCustomer : employee.assignedCustomers) {
-            count++;
+      
 
-        }
-        System.out.println("Employee "+employee.name+" has served "+count+" customers");
+        System.out.println("Employee "+employee.name+" has served "+employee.servedCustomers.size()+" customers");
 
 
     }
