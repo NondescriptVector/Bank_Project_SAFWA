@@ -1,5 +1,6 @@
 public class Person {
-    String name,address,username,password;
+    String name;
+    protected  String address,username,password;
     static String id;
 
     public Person(String name, String address, String username, String password, int id) {
