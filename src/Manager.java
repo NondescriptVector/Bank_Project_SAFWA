@@ -38,7 +38,7 @@ public class Manager {
         int id =1;
         System.out.println("here are the Employees, please choose the one whom you'd like to remove");
         for (Employee employee1:employees){
-            System.out.println("Employee with id number "+id+" "+employee1);
+            System.out.println("Employee with id number "+id+" "+employee1.name);
             id+=1;
         }
         int choice=scanner.nextInt();
