@@ -2,7 +2,7 @@ import java.util.*;
 public class Employee extends Person {
     Scanner scan = new Scanner(System.in);
     
-    private double salary;
+    private double salary=3000.0;
     
     ArrayList <Customer> assignedCustomers = new ArrayList<>();
     ArrayList <Customer> servedCustomers = new ArrayList<>();
