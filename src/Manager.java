@@ -5,17 +5,16 @@ public class Manager {
     //attributes
     ArrayList<Customer> customers=new ArrayList<Customer>();
     ArrayList<Employee>employees=new ArrayList<Employee>();
-    public void changeEmployeePassword(Employee employee){
-        int count =1;
-        System.out.println("here are the Employees, please choose the one whom you'd like to change his password");
-        for (Employee employee1:employees){
-            System.out.println("Employee number "+count+" "+employee1);
-            count+=1;
-        }
-        int choice=scanner.nextInt();
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void changeEmployeePassword(int e){
+
         System.out.println("Enter the new password for the desired employee");
         String newPassword=scanner.next();
-        employee.changePassword(newPassword);
+        employees.get(e).changePassword(newPassword);
 
     }
 
@@ -29,12 +28,12 @@ public class Manager {
         System.out.println("Create their password");
         String password= scanner.next();
         System.out.println("Enter their id ");
-        int id=scanner.nextInt();
+        String id=scanner.nextLine();
         Employee employee= new Employee(name,address,username,password,id);
         employees.add(employee);
 
 
-        }
+    }
     public void removeEmployee(){
         int id =1;
         System.out.println("here are the Employees, please choose the one whom you'd like to remove");
@@ -49,10 +48,14 @@ public class Manager {
         }else System.out.println("Please enter a valid id ");
     }
     public void getEmployeeRecords(Employee employee){
-      
+
 
         System.out.println("Employee "+employee.name+" has served "+employee.servedCustomers.size()+" customers");
 
+
+    }
+    public void adddefaultEmployee(Employee employee){
+        employees.add(employee);
 
     }
 
