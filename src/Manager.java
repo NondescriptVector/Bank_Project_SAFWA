@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Manager extends Person {
     double salary = 3100;
-    /
     ArrayList<Customer> customers = new ArrayList<>();
     ArrayList<Employee> employees = new ArrayList<>();
 

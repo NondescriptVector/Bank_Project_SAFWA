@@ -30,7 +30,7 @@ public class Main {
                     break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
-                continue;
+
             }
         }
         
@@ -61,62 +61,37 @@ public class Main {
                         break;
                     } else {
                         JOptionPane.showMessageDialog(null, "Wrong input");
-                        continue;
                     }
                 }
                 while (flag) {
                     String transactionInput = JOptionPane.showInputDialog("What transaction you want to do " + currentCustomer.name + "?\n1) Deposit or Withdraw\n2) Check balance\n3) Calculate interest\n0) Exit");
                     int option = Integer.parseInt(transactionInput);
                     switch (option) {
+
                         case 0:
                             flag = false;
                             break;
-                      
+
                         case 1:
                             Employee currentEmployee1 =assignEmployee();
                             currentCustomer.assignedEmployee = assignEmployee();
-                              currentEmployee1.currentCustomer=currentCustomer;
-
+                            currentCustomer.assignedEmployee.assignedCustomers.add(currentCustomer);
+                            currentEmployee1.currentCustomer=currentCustomer;
                             JOptionPane.showMessageDialog(null, "Your assigned Employee:\n" + currentCustomer.assignedEmployee + "\nPlease take a seat and wait for your turn");
-                            
-                            int trans;
-                            double moni;
-                         
-                           
-                                String transactionTypeInput = JOptionPane.showInputDialog("Choose transaction:\n1) Deposit\n2) Withdraw");
-                                trans = Integer.parseInt(transactionTypeInput);
-                            
-                            switch (trans) {
-                                case 1:
-                                    String depositAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to deposit: ");
-                                    moni = Double.parseDouble(depositAmountInput);
-                                    currentEmployee1.currentCustomer.deposit(moni);
-                                    JOptionPane.showMessageDialog(null, "Deposit successful!");
-                                    flag = anothertransaction();
-                                    break;
-                                case 2:
-                                    String withdrawAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to withdraw: ");
-                                    moni = Double.parseDouble(withdrawAmountInput);
-                                    currentEmployee1.currentCustomer.withdraw(moni);
-                                    JOptionPane.showMessageDialog(null, "Withdrawal successful!");
-                                    flag = anothertransaction();
-                                    break;
-                                default:
-                                    JOptionPane.showMessageDialog(null, "Wrong input");
-                            }
                             break;
-                           
-   
+
                         case 2:
                             currentCustomer.checkBalance();
                             flag = anothertransaction();
                             break;
+
                         case 3:
                             String interestInput = JOptionPane.showInputDialog("Enter interest rate");
                             double interestRate = Double.parseDouble(interestInput);
                             JOptionPane.showMessageDialog(null, "Interest on balance with " + interestRate + " interest rate = " + currentCustomer.calculateInterest(interestRate));
                             flag = anothertransaction();
                             break;
+
                         default:
                             JOptionPane.showMessageDialog(null, "Wrong input");
                     }
@@ -149,7 +124,7 @@ public class Main {
                         case 4:
                             int trans;
                             double moni;
-                            JOptionPane.showMessageDialog(null, "Current customer: " + currentEmployee.currentCustomer);
+                            JOptionPane.showMessageDialog(null, "Current customer: " + currentEmployee.currentCustomer());
                             if (currentEmployee.currentCustomer == null) {
                                 continue;
                             } else {
@@ -266,17 +241,14 @@ public class Main {
         int randomNum = (int)(Math.random() * 5);
         Employee that_guy = m1.employees.get(randomNum);
         for (int i = 1; i < m1.employees.size(); i++)
-        if (m1.employees.get(i).assignedCustomers.size() < that_guy.assignedCustomers.size())
-        that_guy = m1.employees.get(i);
+            if (m1.employees.get(i).assignedCustomers.size() < that_guy.assignedCustomers.size())
+                that_guy = m1.employees.get(i);
         return that_guy;
     }
 
     public static boolean anothertransaction() {
         String input = JOptionPane.showInputDialog("Do you want to make another transaction?\n1) Yes\n2) No");
         int res = Integer.parseInt(input);
-            if (res == 1) {
-      return true;
-    } else {
-      return false;}
+        return res == 1;
     }
 }
