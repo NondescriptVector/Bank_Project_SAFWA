@@ -1,255 +1,259 @@
+import javax.swing.*;
 import java.util.*;
+
 public class Main {
-    static Scanner cs=new Scanner(System.in);
-    static Manager m1=new Manager("Youssef","alex" ,"Jo" ,"1234" ,"3" );
+    static Manager m1 = new Manager("Ahmed", "alex", "ayad", "1234", "1");
+
     public static void main(String[] args) {
-        Employee employee1=new Employee("Ahmed","alex" ,"Ayad" ,"1234" ,"1" );
-        Employee employee2=new Employee("Akram","alex" ,"Akram99" ,"1234" ,"2" );
-        Employee employee3=new Employee("ZiadA","alex" ,"zoz" ,"1234" ,"3" );
-        Employee employee4=new Employee("ZiadW","alex" ,"wael" ,"1234" ,"4" );
+        // Initialize employees
+        Employee employee1 = new Employee("Abdelrahman", "alex", "abdo", "1234", "1");
+        Employee employee2 = new Employee("Akram", "alex", "Akram99", "1234", "2");
+        Employee employee3 = new Employee("ZiadA", "alex", "zoz", "1234", "3");
+        Employee employee4 = new Employee("ZiadW", "alex", "wael", "1234", "4");
+        Employee employee5 = new Employee("Youssef", "alex", "Jo", "1234", "5");
 
         m1.adddefaultEmployee(employee1);
         m1.adddefaultEmployee(employee2);
         m1.adddefaultEmployee(employee3);
         m1.adddefaultEmployee(employee4);
+        m1.adddefaultEmployee(employee5);
 
-        System.out.println("Welcome to our Bank Here where every deal is legendary ");
+        // Welcome message
+        JOptionPane.showMessageDialog(null, "Welcome to our Bank Here where every deal is legendary");
+
         int identity;
         while (true) {
             try {
-                System.out.println("1)customer \n2)Employee\n3)Manager");
-                identity = cs.nextInt();
-
-                if (identity != 0)
+                String input = JOptionPane.showInputDialog("1) Customer\n2) Employee\n3) Manager");
+                identity = Integer.parseInt(input);
+                if (identity!= 0)
                     break;
-            } catch (InputMismatchException e) {
-                System.out.println("enter a valid input");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
             }
         }
-        cs.nextLine();
-        boolean flag=true;
+
         switch (identity) {
             case 1:
-                Customer currentCustomer=null;
-                flag = false;
-                System.out.println("1)new customer\n2)existing customer");
-                int newnigga = cs.nextInt();
-                cs.nextLine();
-                switch(newnigga){
-                    case 1:
-                        System.out.println("..............................................Enter your data ...................................................");
-                        System.out.println("Enter your name");
-                        String name =cs.next();
-                        System.out.println("Enter your address");
-                        String address =cs.next();
-                        System.out.println("Enter your username");
-                        String username =cs.next();
-                        System.out.println("Enter your password");
-                        String password =cs.next();
-                        System.out.println("Enter your id");
-                        String id =cs.next();
-                        System.out.println("Enter your phone number");
-                        String phoneNumber =cs.next();
-                        double balance =1000*(Math.random());
-                        Customer c1 = new Customer(name, address, username, password, id,phoneNumber,balance);
+                Customer currentCustomer = null;
+                boolean flag = true;
+                while (flag) {
+                    String newCustomerInput = JOptionPane.showInputDialog("1) New customer\n2) Existing customer");
+                    int newCustomer = Integer.parseInt(newCustomerInput);
+                    if (newCustomer == 1) {
+                        // Create new customer
+                        String name = JOptionPane.showInputDialog("Enter your name");
+                        String address = JOptionPane.showInputDialog("Enter your address");
+                        String username = JOptionPane.showInputDialog("Enter your username");
+                        String password = JOptionPane.showInputDialog("Enter your password");
+                        String id = JOptionPane.showInputDialog("Enter your id");
+                        String phoneNumber = JOptionPane.showInputDialog("Enter your phone number");
+                        double balance = 1000 * Math.random();
+                        Customer c1 = new Customer(name, address, username, password, id, phoneNumber, balance);
                         m1.customers.add(c1);
                         currentCustomer = c1;
-                        flag = true;
                         break;
-                    case 2:
+                    } else if (newCustomer == 2) {
                         currentCustomer = customerlogin();
-                        flag = true;
                         break;
-                    default:
-                        System.out.println("Wrong input");
-                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Wrong input");
+                        continue;
+                    }
                 }
 
-                while(flag){
-                    System.out.println("What transaction you want to do "+currentCustomer.name+"?");
-                    System.out.println("1)deposit\n2)withdraw\n3)check balance\n4)calculate interest\n0)Exit");
-                    int option =cs.nextInt();
-                    cs.nextLine();
+                while (flag) {
+                    String transactionInput = JOptionPane.showInputDialog("What transaction you want to do " + currentCustomer.name + "?\n1) Deposit\n2) Withdraw\n3) Check balance\n4) Calculate interest\n0) Exit");
+                    int option = Integer.parseInt(transactionInput);
                     switch (option) {
                         case 0:
                             flag = false;
+                            break;
                         case 1:
                             currentCustomer.wantedTransaction = "deposit";
                             currentCustomer.assignedEmployee = assignEmployee();
-                            System.out.println("Your assigned Employee:\n"+currentCustomer.assignedEmployee+"\nPlease take a seat and wait for your turn");
+                            JOptionPane.showMessageDialog(null, "Your assigned Employee:\n" + currentCustomer.assignedEmployee + "\nPlease take a seat and wait for your turn");
+                            String depositInput = JOptionPane.showInputDialog("Enter amount you want to deposit");
+                            double deposit = Double.parseDouble(depositInput);
+                            currentCustomer.deposit(deposit);
+                            flag = anothertransaction();
                             break;
                         case 2:
                             currentCustomer.wantedTransaction = "withdrawal";
                             currentCustomer.assignedEmployee = assignEmployee();
-                            System.out.println("Your assigned Employee:\n"+currentCustomer.assignedEmployee+"\n Please take a seat and wait for your turn");
+                            JOptionPane.showMessageDialog(null, "Your assigned Employee:\n" + currentCustomer.assignedEmployee + "\nPlease take a seat and wait for your turn");
+                            String withdrawInput = JOptionPane.showInputDialog("Enter amount you want to withdraw");
+                            double withdraw = Double.parseDouble(withdrawInput);
+                            currentCustomer.withdraw(withdraw);
+                            flag = anothertransaction();
                             break;
                         case 3:
                             currentCustomer.checkBalance();
+                            flag = anothertransaction();
                             break;
                         case 4:
-                            double interestRate;
-                            System.out.print("Enter interest: ");
-                            interestRate = cs.nextDouble();
-                            cs.next();
-                            System.out.println("Interest on balance with "+ interestRate+" interest rate = "+currentCustomer.calculateInterest(interestRate));
+                            String interestInput = JOptionPane.showInputDialog("Enter interest rate");
+                            double interestRate = Double.parseDouble(interestInput);
+                            JOptionPane.showMessageDialog(null, "Interest on balance with " + interestRate + " interest rate = " + currentCustomer.calculateInterest(interestRate));
+                            flag = anothertransaction();
                             break;
-                        default:{
-                            System.out.println("Wrong input");
-                        }
+                        default:
+                            JOptionPane.showMessageDialog(null, "Wrong input");
                     }
                 }
                 break;
             case 2:
                 Employee currentEmployee = emplogin();
-
-                while(flag){
-                    System.out.println("Enter transaction you want to do");
-                    System.out.println("1)Change your password\n2)View assigned customer\n3)View salary\n4)Current customer\n0)Exit");
-
-                    int option =cs.nextInt();
-                    cs.nextLine();
-
-                    switch(option){
+                flag=true;
+                while (flag) {
+                    String employeeInput = JOptionPane.showInputDialog("Enter transaction you want to do\n1) Change password\n2) View assigned customer\n3) View salary\n4) Currentcustomer\n0) Exit");
+                    int option = Integer.parseInt(employeeInput);
+                    switch (option) {
                         case 0:
                             flag = false;
                             break;
                         case 1:
-                            System.out.println("Enter new password");
-                            String newpass=cs.next();
-                            currentEmployee.changePassword(newpass);
+                            String newPasswordInput = JOptionPane.showInputDialog("Enter new password");
+                            currentEmployee.changePassword(newPasswordInput);
+                            flag = anothertransaction();
                             break;
                         case 2:
                             currentEmployee.viewAssignedCustomers();
+                            flag = anothertransaction();
                             break;
                         case 3:
-                            System.out.println("Your salary = "+currentEmployee.getSalary());
+                            JOptionPane.showMessageDialog(null, "Your salary = " + currentEmployee.getSalary());
+                            flag = anothertransaction();
                             break;
                         case 4:
                             int trans;
                             double moni;
-                            System.out.println("Current customer: "+currentEmployee.currentCustomer);
-                            System.out.println("Choose transaction:\n1)Deposit\n2)Withdraw");
-                            trans = cs.nextInt();
-                            cs.nextLine();
-                            switch(trans){
+                            JOptionPane.showMessageDialog(null, "Current customer: " + currentEmployee.currentCustomer);
+                            if (currentEmployee.currentCustomer == null) {
+                                continue;
+                            } else {
+                                String transactionTypeInput = JOptionPane.showInputDialog("Choose transaction:\n1) Deposit\n2) Withdraw");
+                                trans = Integer.parseInt(transactionTypeInput);
+                            }
+                            switch (trans) {
                                 case 1:
-                                    System.out.println("Enter the amount that the customer wants to deposit: ");
-                                    moni = cs.nextDouble();
-                                    cs.next();
+                                    String depositAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to deposit: ");
+                                    moni = Double.parseDouble(depositAmountInput);
                                     currentEmployee.currentCustomer.deposit(moni);
+                                    JOptionPane.showMessageDialog(null, "Deposit successful!");
                                     break;
                                 case 2:
-                                    System.out.println("Enter the amount that the customer wants to withdraw: ");
-                                    moni = cs.nextDouble();
-                                    cs.next();
+                                    String withdrawAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to withdraw: ");
+                                    moni = Double.parseDouble(withdrawAmountInput);
                                     currentEmployee.currentCustomer.withdraw(moni);
+                                    JOptionPane.showMessageDialog(null, "Withdrawal successful!");
                                     break;
                                 default:
-                                    System.out.println("Wrong input");
+                                    JOptionPane.showMessageDialog(null, "Wrong input");
                             }
+                            flag = anothertransaction();
                             break;
-                        default:
-                            System.out.println("Wrong input");
                     }
-
                 }
                 break;
             case 3:
                 flag = managerLogin();
-                while(flag){
-                    System.out.println("Enter the transaction you want to do ");
-                    System.out.println("1)change employee password\n2)Add employee\n3)Remove employee\n4)Get Employee record\n0)Exit");
-                    int option =cs.nextInt();
-                    cs.nextLine();
-                    switch(option){
+                while (flag) {
+                    String managerInput = JOptionPane.showInputDialog("Enter the transaction you want to do\n1) Change employee password\n2) Add employee\n3) Remove employee\n4) Get Employee record\n0) Exit");
+                    int option = Integer.parseInt(managerInput);
+                    switch (option) {
                         case 0:
                             flag = false;
                             break;
                         case 1:
-                            ArrayList<Employee> employees=m1.getEmployees();
-
-                            System.out.println("enter the employee you want to change password for");
-                            for (Employee e:employees){
-                                System.out.println("Employee with id number "+e.id()+" "+e.name);
-                            }
-                            String choice=cs.next();
-                            for(Employee e: employees) {
-                                if(e.id().equals(choice))
+                            ArrayList<Employee> employees = m1.getEmployees();
+                            String employeeIdInput = JOptionPane.showInputDialog("Enter the employee you want to change password for");
+                            for (Employee e : employees) {
+                                if (e.id().equals(employeeIdInput))
                                     m1.changeEmployeePassword(e);
-                                System.out.println("Password changed");
+                                JOptionPane.showMessageDialog(null, "Password changed");
                             }
-                            ;
+                            flag = anothertransaction();
                             break;
                         case 2:
                             m1.addEmployee();
-
+                            flag = anothertransaction();
                             break;
                         case 3:
                             m1.removeEmployee();
+                            flag = anothertransaction();
                             break;
                         case 4:
-                            for(Employee e: m1.employees){
+                            for (Employee e : m1.employees) {
                                 m1.getEmployeeRecords(e);
                             }
+                            flag = anothertransaction();
                             break;
                     }
                 }
                 break;
             default:
-                System.out.println("Wrong input");
+                JOptionPane.showMessageDialog(null, "Wrong input");
         }
     }
-    public static Employee emplogin(){
-        String username,password;
-        while(true){
-            System.out.print("Enter your username: ");
-            username = cs.next();
-            for(Employee e: m1.employees){
-                if(username.equalsIgnoreCase(e.username())) {
-                    System.out.print("Enter password: ");
-                    password = cs.next();
-                    if(e.password().equals(password))
+
+    public static Employee emplogin() {
+        String username, password;
+        while (true) {
+            username = JOptionPane.showInputDialog("Enter your username: ");
+            for (Employee e : m1.employees) {
+                if (username.equalsIgnoreCase(e.username())) {
+                    password = JOptionPane.showInputDialog("Enter password: ");
+                    if (e.password().equals(password))
                         return e;
                 }
             }
-            System.out.println("Wrong username or password!");
+            JOptionPane.showMessageDialog(null, "Wrong username or password!");
         }
     }
-    public static Customer customerlogin(){
-        String username,password;
-        while(true){
-            System.out.print("Enter your username: ");
-            username = cs.next();
-            for(Customer c : m1.customers){
-                if(username.equalsIgnoreCase(c.username())) {
-                    System.out.print("Enter password: ");
-                    password = cs.next();
-                    if(c.password().equals(password))
+
+    public static Customer customerlogin() {
+        String username, password;
+        while (true) {
+            username = JOptionPane.showInputDialog("Enter your username: ");
+            for (Customer c : m1.customers) {
+                if (username.equalsIgnoreCase(c.username())) {
+                    password = JOptionPane.showInputDialog("Enter password: ");
+                    if (c.password().equals(password))
                         return c;
                 }
             }
-            System.out.println("Wrong username or password!");
+            JOptionPane.showMessageDialog(null, "Wrong username or password!");
         }
     }
-    public static boolean managerLogin(){
-        String username,password;
-        while(true) {
-            System.out.print("Enter your username: ");
-            username = cs.next();
+
+    public static boolean managerLogin() {
+        String username, password;
+        while (true) {
+            username = JOptionPane.showInputDialog("Enter your username: ");
             if (username.equalsIgnoreCase(m1.username())) {
-                System.out.print("Enter password: ");
-                password = cs.next();
+                password = JOptionPane.showInputDialog("Enter password: ");
                 if (password.equals(m1.password()))
                     return true;
             }
-            System.out.println("Wrong username or password");
+            JOptionPane.showMessageDialog(null, "Wrong username or password");
         }
     }
-    public static Employee assignEmployee(){
+
+    public static Employee assignEmployee() {
         Employee that_guy = m1.employees.getFirst();
-        for(int i = 1;i<m1.employees.size();i++)
-            if(m1.employees.get(i).assignedCustomers.size()<that_guy.assignedCustomers.size())
-                that_guy  = m1.employees.get(i);
+        for (int i = 1; i < m1.employees.size(); i++)
+            if (m1.employees.get(i).assignedCustomers.size() < that_guy.assignedCustomers.size())
+                that_guy = m1.employees.get(i);
         return that_guy;
+    }
+
+    public static boolean anothertransaction() {
+        String input = JOptionPane.showInputDialog("Do you want to make another transaction?\n1) Yes\n2) No");
+        int res = Integer.parseInt(input);
+            if (res == 1) {
+      return true;
+    } else {
+      return false;}
     }
 }
