@@ -5,7 +5,6 @@ public class Main {
     static Manager m1 = new Manager("Ahmed", "alex", "ayad", "1234", "1");
 
     public static void main(String[] args) {
-        // Initialize employees
         Employee employee1 = new Employee("Abdelrahman", "alex", "abdo", "1234", "1");
         Employee employee2 = new Employee("Akram", "alex", "Akram99", "1234", "2");
         Employee employee3 = new Employee("ZiadA", "alex", "zoz", "1234", "3");
@@ -18,9 +17,10 @@ public class Main {
         m1.adddefaultEmployee(employee4);
         m1.adddefaultEmployee(employee5);
 
-        // Welcome message
+        
         JOptionPane.showMessageDialog(null, "Welcome to our Bank Here where every deal is legendary");
 
+       
         int identity;
         while (true) {
             try {
@@ -30,13 +30,16 @@ public class Main {
                     break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
+                continue;
             }
         }
+        
+        
 
         switch (identity) {
             case 1:
                 Customer currentCustomer = null;
-                boolean flag = true;
+                boolean flag=true;
                 while (flag) {
                     String newCustomerInput = JOptionPane.showInputDialog("1) New customer\n2) Existing customer");
                     int newCustomer = Integer.parseInt(newCustomerInput);
@@ -61,37 +64,54 @@ public class Main {
                         continue;
                     }
                 }
-
                 while (flag) {
-                    String transactionInput = JOptionPane.showInputDialog("What transaction you want to do " + currentCustomer.name + "?\n1) Deposit\n2) Withdraw\n3) Check balance\n4) Calculate interest\n0) Exit");
+                    String transactionInput = JOptionPane.showInputDialog("What transaction you want to do " + currentCustomer.name + "?\n1) Deposit or Withdraw\n2) Check balance\n3) Calculate interest\n0) Exit");
                     int option = Integer.parseInt(transactionInput);
                     switch (option) {
                         case 0:
                             flag = false;
                             break;
+                      
                         case 1:
-                            currentCustomer.wantedTransaction = "deposit";
+                            Employee currentEmployee1 =assignEmployee();
                             currentCustomer.assignedEmployee = assignEmployee();
+                              currentEmployee1.currentCustomer=currentCustomer;
+
                             JOptionPane.showMessageDialog(null, "Your assigned Employee:\n" + currentCustomer.assignedEmployee + "\nPlease take a seat and wait for your turn");
-                            String depositInput = JOptionPane.showInputDialog("Enter amount you want to deposit");
-                            double deposit = Double.parseDouble(depositInput);
-                            currentCustomer.deposit(deposit);
-                            flag = anothertransaction();
+                            
+                            int trans;
+                            double moni;
+                         
+                           
+                                String transactionTypeInput = JOptionPane.showInputDialog("Choose transaction:\n1) Deposit\n2) Withdraw");
+                                trans = Integer.parseInt(transactionTypeInput);
+                            
+                            switch (trans) {
+                                case 1:
+                                    String depositAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to deposit: ");
+                                    moni = Double.parseDouble(depositAmountInput);
+                                    currentEmployee1.currentCustomer.deposit(moni);
+                                    JOptionPane.showMessageDialog(null, "Deposit successful!");
+                                    flag = anothertransaction();
+                                    break;
+                                case 2:
+                                    String withdrawAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to withdraw: ");
+                                    moni = Double.parseDouble(withdrawAmountInput);
+                                    currentEmployee1.currentCustomer.withdraw(moni);
+                                    JOptionPane.showMessageDialog(null, "Withdrawal successful!");
+                                    flag = anothertransaction();
+                                    break;
+                                default:
+                                    JOptionPane.showMessageDialog(null, "Wrong input");
+                            }
                             break;
+                           
+   
                         case 2:
-                            currentCustomer.wantedTransaction = "withdrawal";
-                            currentCustomer.assignedEmployee = assignEmployee();
-                            JOptionPane.showMessageDialog(null, "Your assigned Employee:\n" + currentCustomer.assignedEmployee + "\nPlease take a seat and wait for your turn");
-                            String withdrawInput = JOptionPane.showInputDialog("Enter amount you want to withdraw");
-                            double withdraw = Double.parseDouble(withdrawInput);
-                            currentCustomer.withdraw(withdraw);
-                            flag = anothertransaction();
-                            break;
-                        case 3:
                             currentCustomer.checkBalance();
                             flag = anothertransaction();
                             break;
-                        case 4:
+                        case 3:
                             String interestInput = JOptionPane.showInputDialog("Enter interest rate");
                             double interestRate = Double.parseDouble(interestInput);
                             JOptionPane.showMessageDialog(null, "Interest on balance with " + interestRate + " interest rate = " + currentCustomer.calculateInterest(interestRate));
@@ -101,8 +121,9 @@ public class Main {
                             JOptionPane.showMessageDialog(null, "Wrong input");
                     }
                 }
+                
                 break;
-            case 2:
+         case 2:
                 Employee currentEmployee = emplogin();
                 flag=true;
                 while (flag) {
@@ -155,7 +176,6 @@ public class Main {
                             break;
                     }
                 }
-                break;
             case 3:
                 flag = managerLogin();
                 while (flag) {
@@ -195,7 +215,8 @@ public class Main {
             default:
                 JOptionPane.showMessageDialog(null, "Wrong input");
         }
-    }
+        }
+    
 
     public static Employee emplogin() {
         String username, password;
@@ -240,11 +261,13 @@ public class Main {
         }
     }
 
+
     public static Employee assignEmployee() {
-        Employee that_guy = m1.employees.getFirst();
+        int randomNum = (int)(Math.random() * 5);
+        Employee that_guy = m1.employees.get(randomNum);
         for (int i = 1; i < m1.employees.size(); i++)
-            if (m1.employees.get(i).assignedCustomers.size() < that_guy.assignedCustomers.size())
-                that_guy = m1.employees.get(i);
+        if (m1.employees.get(i).assignedCustomers.size() < that_guy.assignedCustomers.size())
+        that_guy = m1.employees.get(i);
         return that_guy;
     }
 
