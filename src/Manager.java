@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Manager {
+    double salary;
     static Scanner scanner= new Scanner(System.in);
     //attributes
     ArrayList<Customer> customers=new ArrayList<Customer>();

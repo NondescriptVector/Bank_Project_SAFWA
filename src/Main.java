@@ -38,7 +38,7 @@ public class Main {
                 Customer c1=new Customer(name, address, username, password, id,phonenumber,balance);
                 boolean flag=true;
                 while(flag){
-                    System.out.println("What transaction you want to do "+c1.getName()+"?");
+                    System.out.println("What transaction you want to do "+c1.name+"?");
                     System.out.println("1)deposite\n2)withdraw\n3)check balance");
                     int option =cs.nextInt();
                     switch (option) {
@@ -53,7 +53,7 @@ public class Main {
                             else{ System.out.println("rate the service from 0 to 100");
                                 double rate =cs.nextDouble();
                                 c1.calculateInterest(rate);
-                                System.out.println(  c1.getFormattedDetails());
+                                System.out.println(  c1);
 
                                 flag =false;}
 
@@ -69,7 +69,7 @@ public class Main {
                             else{   System.out.println("rate the service from 0 to 100");
                                 double rate =cs.nextDouble();
                                 c1.calculateInterest(rate);
-                                System.out.println(  c1.getFormattedDetails());
+                                System.out.println(  c1);
 
                                 flag =false;}
 
@@ -84,7 +84,7 @@ public class Main {
                             else{System.out.println("rate the service from 0 to 100");
                                 double rate =cs.nextDouble();
                                 c1.calculateInterest(rate);
-                                System.out.println(  c1.getFormattedDetails());
+                                System.out.println(  c1);
                                 flag =false ;}
                             break;
                         default:{

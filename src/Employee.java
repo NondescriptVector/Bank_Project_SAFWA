@@ -51,7 +51,7 @@ public class Employee extends Person {
             return;
         } 
          for (Customer customer : assignedCustomers) {
-                System.out.println(customer.getFormattedDetails());            
+                System.out.println(customer);
          }
   
         System.out.println("Do you want to proceed to the next customer?");

@@ -2,44 +2,17 @@ import java.lang.*;
 
 public class Customer extends Person {
     // Attributes
-    private String customerId;
     private String phoneNumber;
     private double balance;
 
     // Constructor
-    public Customer(String customerId, String address, String phoneNumber, double balance) {
-        super(customerId, address, address, phoneNumber,id);
-        this.customerId = id;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.balance = balance;
+    public Customer(String name,String address, String username, String password,String id,String phoneNumber, double balance) {
+        super(name, address, username,password,id);
+        setPhoneNumber(phoneNumber);
+        setBalance(balance);
     }
 
     // Getters and setters
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -50,11 +23,11 @@ public class Customer extends Person {
     }
 
     public double getBalance() {
-        return Math.abs(balance);
+        return balance;
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        this.balance = Math.abs(balance);
     }
 
     // Method to deposit funds
@@ -84,11 +57,9 @@ public class Customer extends Person {
     }
 
     // Override toString method for easy printing
-    public String getFormattedDetails() {
-        return "Customer ID: " + customerId + "\n" +
-               "Name: " + name + "\n" +
-               "Address: " + address + "\n" +
-               "Phone Number: " + phoneNumber + "\n" +
-               "Balance: $" + balance;
+    public String toString() {
+        return super.toString() +
+               "\nPhone Number: " + getPhoneNumber() + "\n" +
+               "Balance: $" + getBalance();
     }
 }
