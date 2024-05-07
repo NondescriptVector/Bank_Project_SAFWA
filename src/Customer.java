@@ -1,20 +1,21 @@
+import javax.swing.JOptionPane;
 import java.lang.*;
 
 public class Customer extends Person {
-    // Attributes
+ 
     private String phoneNumber;
     private double balance;
     String wantedTransaction;
     Employee assignedEmployee;
 
-    // Constructor
-    public Customer(String name,String address, String username, String password,String id,String phoneNumber, double balance) {
-        super(name, address, username,password,id);
+
+    public Customer(String name, String address, String username, String password, String id, String phoneNumber, double balance) {
+        super(name, address, username, password, id);
         setPhoneNumber(phoneNumber);
         setBalance(balance);
     }
 
-    // Getters and setters
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -32,33 +33,30 @@ public class Customer extends Person {
         this.balance = Math.abs(balance);
     }
 
-    // Method to deposit funds
     public void deposit(double amount) {
         balance += amount;
-        System.out.println("Deposit of $" + amount + " successful. Current balance: $" + balance);
+        JOptionPane.showMessageDialog(null, "Deposit of $" + amount + " successful. Current balance: $" + balance);
     }
 
-    // Method to withdraw funds
     public void withdraw(double amount) {
         if (amount <= balance) {
             balance -= amount;
-            System.out.println("Withdrawal of $" + amount + " successful. Current balance: $" + balance);
+            JOptionPane.showMessageDialog(null, "Withdrawal of $" + amount + " successful. Current balance: $" + balance);
         } else {
-            System.out.println("Insufficient funds. Withdrawal failed.");
+            JOptionPane.showMessageDialog(null, "Insufficient funds. Withdrawal failed.");
         }
     }
 
-    // Method to check account balance
     public void checkBalance() {
-        System.out.println("Current balance: $" + balance);
+        JOptionPane.showMessageDialog(null, "Current balance: $" + balance);
     }
 
-    // Method to calculate interest (sample method)
     public double calculateInterest(double rate) {
+       
         return balance * (rate / 100);
     }
 
-    // Override toString method for easy printing
+
     public String toString() {
         return super.toString() +
                "\nPhone Number: " + getPhoneNumber() + "\n" +
