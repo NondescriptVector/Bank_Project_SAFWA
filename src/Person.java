@@ -1,13 +1,13 @@
 public class Person {
     String name;
-    protected  String address,username,password, id;
+    private   String address,username,password, id;
 
     public Person(String name, String address, String username, String password, String id) {
         this.name = name;
-        this.address = address;
-        this.username = username;
-        this.password = password;
-        this.id = id;
+        setAddress(address);
+        setUsername(username);
+        setPassword(password);
+        setId(id);
     }
 
     public String address() {
@@ -44,6 +44,6 @@ public class Person {
     public String toString() {
         return "Name: " + name + "\n" +
                 "Address: " + address() + "\n" +
-                "ID: " + id;
+                "ID: " + id();
     }
 }

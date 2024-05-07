@@ -1,21 +1,25 @@
 import java.util.*;
 
-public class Manager {
-    double salary;
+public class Manager extends Person{
+    double salary = 3100;
     static Scanner scanner= new Scanner(System.in);
     //attributes
-    ArrayList<Customer> customers=new ArrayList<Customer>();
-    ArrayList<Employee>employees=new ArrayList<Employee>();
+    ArrayList<Customer> customers=new ArrayList<>();
+    ArrayList<Employee>employees=new ArrayList<>();
+
+    public Manager(String name, String address, String username, String password, String id) {
+        super(name, address, username, password, id);
+    }
 
     public ArrayList<Employee> getEmployees() {
         return employees;
     }
 
-    public void changeEmployeePassword(int e){
+    public void changeEmployeePassword(Employee e){
 
         System.out.println("Enter the new password for the desired employee");
         String newPassword=scanner.next();
-        employees.get(e).changePassword(newPassword);
+        e.setPassword(newPassword);
 
     }
 
@@ -29,29 +33,30 @@ public class Manager {
         System.out.println("Create their password");
         String password= scanner.next();
         System.out.println("Enter their id ");
-        String id=scanner.nextLine();
-        Employee employee= new Employee(name,address,username,password,id);
-        employees.add(employee);
+        String id=scanner.next();
+
+        employees.add(new Employee(name,address,username,password,id));
 
 
     }
     public void removeEmployee(){
-        int id =1;
         System.out.println("here are the Employees, please choose the one whom you'd like to remove");
-        for (Employee employee1:employees){
-            System.out.println("Employee with id number "+id+" "+employee1.name);
-            id+=1;
+        for (Employee e:employees){
+            System.out.println("Employee with id number "+e.id()+" "+e.name);
         }
         int choice=scanner.nextInt();
-        if (choice<=employees.size()&&choice>=0){
-            employees.remove(choice-1);
-            System.out.println("Employee has been removed successfully");
-        }else System.out.println("Please enter a valid id ");
+        if(choice<0||choice>employees.size()) {
+            System.out.println("enter a valid number");
+            return;
+        }
+        System.out.println("Employee removed");
+        employees.removeIf(x->x.id().equals(String.valueOf(choice)));
+
     }
     public void getEmployeeRecords(Employee employee){
 
 
-        System.out.println("Employee "+employee.name+" has served "+employee.servedCustomers.size()+" customers");
+        System.out.println("Employee "+employee.name+" has served "+employee.servedCustomers+" customers");
 
 
     }
@@ -59,6 +64,4 @@ public class Manager {
         employees.add(employee);
 
     }
-
-
 }

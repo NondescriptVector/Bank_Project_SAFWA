@@ -4,6 +4,8 @@ public class Customer extends Person {
     // Attributes
     private String phoneNumber;
     private double balance;
+    String wantedTransaction;
+    Employee assignedEmployee;
 
     // Constructor
     public Customer(String name,String address, String username, String password,String id,String phoneNumber, double balance) {
