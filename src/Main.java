@@ -25,8 +25,8 @@ public class Main {
         while (true) {
             while(true) {
                 try {
-                    String input = JOptionPane.showInputDialog("1) Customer\n2) Employee\n3) Manager");
-                    identity = Integer.parseInt(input);
+                    String input = "1) Customer\n2) Employee\n3) Manager";
+                    identity = tryinput(input);
                     if(identity!=0)
                         break;
                 } catch (NumberFormatException e) {
@@ -39,8 +39,8 @@ public class Main {
                     Customer currentCustomer = null;
                     boolean flag = true;
                     while (flag) {
-                        String newCustomerInput = JOptionPane.showInputDialog("1) New customer\n2) Existing customer");
-                        int newCustomer = Integer.parseInt(newCustomerInput);
+                        String newCustomerInput ="1) New customer\n2) Existing customer";
+                        int newCustomer = tryinput(newCustomerInput);
                         if (newCustomer == 1) {
                             // Create new customer
                             String name = JOptionPane.showInputDialog("Enter your name");
@@ -62,8 +62,8 @@ public class Main {
                         }
                     }
                     while (flag) {
-                        String transactionInput = JOptionPane.showInputDialog("What transaction you want to do " + currentCustomer.name + "?\n1) Deposit or Withdraw\n2) Check balance\n3) Calculate interest\n0) Exit");
-                        int option = Integer.parseInt(transactionInput);
+                        String transactionInput = "What transaction you want to do " + currentCustomer.name + "?\n1) Deposit or Withdraw\n2) Check balance\n3) Calculate interest\n0) Exit";
+                        int option =tryinput(transactionInput);
                         switch (option) {
 
                             case 0:
@@ -81,8 +81,8 @@ public class Main {
                                 break;
 
                             case 3:
-                                String interestInput = JOptionPane.showInputDialog("Enter interest rate");
-                                double interestRate = Double.parseDouble(interestInput);
+                                String interestInput ="Enter interest rate";
+                                double interestRate = tryinput(interestInput);
                                 JOptionPane.showMessageDialog(null, "Interest on balance with " + interestRate + " interest rate = " + currentCustomer.calculateInterest(interestRate));
                                 break;
 
@@ -96,8 +96,8 @@ public class Main {
                     Employee currentEmployee = emplogin();
                     flag = true;
                     while (flag) {
-                        String employeeInput = JOptionPane.showInputDialog("Enter transaction you want to do\n1) Change password\n2) View assigned customer\n3) View salary\n4) Currentcustomer\n0) Exit");
-                        int option = Integer.parseInt(employeeInput);
+                        String employeeInput = "Enter transaction you want to do\n1) Change password\n2) View assigned customer\n3) View salary\n4) Currentcustomer\n0) Exit";
+                        int option = tryinput(employeeInput);
                         switch (option) {
                             case 0:
                                 flag = false;
@@ -121,19 +121,19 @@ public class Main {
                                 if (currentEmployee.currentCustomer == null) {
                                     continue;
                                 } else {
-                                    String transactionTypeInput = JOptionPane.showInputDialog("Choose transaction:\n1) Deposit\n2) Withdraw");
-                                    trans = Integer.parseInt(transactionTypeInput);
+                                    String transactionTypeInput = "Choose transaction:\n1) Deposit\n2) Withdraw";
+                                    trans = tryinput(transactionTypeInput);
                                 }
                                 switch (trans) {
                                     case 1:
-                                        String depositAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to deposit: ");
-                                        moni = Double.parseDouble(depositAmountInput);
+                                        String depositAmountInput = "Enter the amount that the customer wants to deposit: ";
+                                        moni = tryinput(depositAmountInput);
                                         currentEmployee.currentCustomer.deposit(moni);
                                         JOptionPane.showMessageDialog(null, "Deposit successful!");
                                         break;
                                     case 2:
-                                        String withdrawAmountInput = JOptionPane.showInputDialog("Enter the amount that the customer wants to withdraw: ");
-                                        moni = Double.parseDouble(withdrawAmountInput);
+                                        String withdrawAmountInput ="Enter the amount that the customer wants to withdraw: ";
+                                        moni = tryinput(withdrawAmountInput);
                                         currentEmployee.currentCustomer.withdraw(moni);
                                         JOptionPane.showMessageDialog(null, "Withdrawal successful!");
                                         break;
@@ -146,8 +146,9 @@ public class Main {
                 case 3:
                     flag = managerLogin();
                     while (flag) {
-                        String managerInput = JOptionPane.showInputDialog("Enter the transaction you want to do\n1) Change employee password\n2) Add employee\n3) Remove employee\n4) Get Employee record\n0) Exit");
-                        int option = Integer.parseInt(managerInput);
+                        String managerInput = "Enter the transaction you want to do\n1) Change employee password\n2) Add employee\n3) Remove employee\n4) Get Employee record\n0) Exit";
+                        
+                        int option = tryinput(managerInput);
                         switch (option) {
                             case 0:
                                 flag = false;
@@ -239,8 +240,22 @@ public class Main {
     }
 
     public static boolean anothertransaction() {
-        String input = JOptionPane.showInputDialog("Do you want to make another transaction?\n1) Yes\n2) No");
-        int res = Integer.parseInt(input);
+        String input = "Do you want to make another transaction?\n1) Yes\n2) No";
+        int res = tryinput(input);
         return res == 1;
     }
+    public static int tryinput(String message){
+        int input;
+        while(true){
+        try{
+            String input1=JOptionPane.showInputDialog( message);
+            input=Integer.parseInt(input1);
+            break;
+        }catch(NumberFormatException exception){
+            JOptionPane.showMessageDialog(null,"Enter integer number");
+        }
+        }
+    return input;
+    
+}
 }
